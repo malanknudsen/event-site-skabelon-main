@@ -1,10 +1,10 @@
 /* Variabler */
 html {
-  --color-page: #f7f7f7;
-  --color-surface: #fff;
-  --color-text: #222;
-  --color-muted: #666;
-  --color-border: #d8d8d8;
+  --color-page: #590d22;
+  --color-surface: #590d22;
+  --color-text: #d4af37;
+  --color-muted: #f4ece1;
+  --color-border: #d4af37;
   --space-05: 0.5rem;
   --space-1: 1rem;
   --space-2: 2rem;
@@ -12,6 +12,10 @@ html {
 
   background: var(--color-page);
   color: var(--color-text);
+
+  --font-heading: "Germania One", serif;
+  --font-body:    
+;
 }
 
 /* Globalt layout */
@@ -21,6 +25,12 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: minmax(1rlh, 1fr) minmax(0, 75rem) minmax(1rlh, 1fr);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-);
 }
 
 h1,
