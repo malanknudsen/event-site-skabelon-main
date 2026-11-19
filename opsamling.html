@@ -2,23 +2,27 @@
 <html lang="da">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Opsamling | Eventnavn</title>
-  <link rel="stylesheet" href="./starter.css">
-  <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Din invitation | Renæssancemaskeraden</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="starter.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
   <header class="site-header">
     <div class="header-content">
-      <a class="site-logo" href="./">Eventnavn</a>
+      <a class="site-logo" href="./">
+        <img src="./img/favicon.svg" alt="">
+        Renæssancemaskeraden
+      </a>
       <nav class="site-nav">
-        <button>Menu</button>
+        <button popovertarget="menu">Menu</button>
         <ul class="menu" id="menu" popover>
           <li><a href="./">Forside</a></li>
-          <li><a href="./svg.html">Interaktiv SVG</a></li>
-          <li><a href="./form.html" aria-current="page">Formular</a></li>
+          <li><a href="./svg.html">Kortet</a></li>
+          <li><a href="./form.html" aria-current="page">Tilmelding</a></li>
         </ul>
       </nav>
     </div>
@@ -27,21 +31,31 @@
   <main>
     <section class="opsamling-page">
       <div class="opsamling-intro">
-        <h1>Opsamling</h1>
-        <p>Vis brugerens valg som et pass, en invitation eller noget andet, der passer til dit event.</p>
+        <h1>Tak for din tilmelding</h1>
+        <p>Her er din personlige invitation. Farven følger dit hof, og masken er den, du har valgt.</p>
         <div class="actions">
-          <a class="button" href="./form.html">Tilbage til formular</a>
+          <a class="button button-secondary" href="./form.html">Tilbage til formular</a>
         </div>
       </div>
 
-      <article class="opsamling-placeholder"></article>
+      <!-- Invitationen. Elementerne med id bliver fyldt ud af script.js -->
+      <article class="opsamling-placeholder invitation">
+        <p class="invitation-kicker">Renæssancemaskeraden</p>
+        <img id="maske-billede" src="./img/maske-colombina.svg" alt="Din maske">
+        <h2 id="gaest-navn">Kære gæst</h2>
+        <p>Maske: <span id="gaest-maske"></span></p>
+        <p>Hof: <span id="gaest-hof"></span></p>
+        <h3>Din aften</h3>
+        <ul id="gaest-oplevelser"></ul>
+        <p class="invitation-footer">Lørdag 12. december 2026 · Palazzo Rosso · Portene åbner kl. 19</p>
+      </article>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="footer-content">
-      <p>Eventnavn</p>
-      <p>Footer</p>
+      <p>Renæssancemaskeraden</p>
+      <p>Skoleprojekt · EK Multimediedesign 2026</p>
     </div>
   </footer>
   <script src="./script.js"></script>

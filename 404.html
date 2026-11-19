@@ -1,31 +1,50 @@
 <!doctype html>
 <html lang="da">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 | Eventnavn</title>
-    <link rel="stylesheet" href="./starter.css" />
-    <link rel="stylesheet" href="./style.css" />
-  </head>
 
-  <body>
-    <header class="site-header">
-      <div class="header-content">
-        <a class="site-logo" href="./">Eventnavn</a>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siden findes ikke | Renæssancemaskeraden</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="starter.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-    <main>
-      <section class="error-page">
-        <h1>Side ikke fundet</h1>
-        <p>Siden findes ikke.</p>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <a class="site-logo" href="./">
+        <img src="img/favicon.svg" alt="Maske-logo">
+        Renæssancemaskeraden
+      </a>
+      <nav class="site-nav">
+        <button popovertarget="menu">Menu</button>
+        <ul class="menu" id="menu" popover>
+          <li><a href="./">Forside</a></li>
+          <li><a href="svg.html">Kortet</a></li>
+          <li><a href="form.html">Tilmelding</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="error-page">
+      <h1>Side findes ikke</h1>
+      <p>Måske har den taget maske på. Gå tilbage til forsiden og prøv igen</p>
+      <div class="actions">
         <a class="button" href="./">Gå til forsiden</a>
-      </section>
-    </main>
+      </div>
+    </section>
+  </main>
 
-    <footer class="site-footer">
-      <p>Eventnavn</p>
-      <p>Footer</p>
-    </footer>
-  </body>
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>Renæssancemaskeraden</p>
+      <p>Skoleprojekt · EK Multimediedesign 2026</p>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+
 </html>

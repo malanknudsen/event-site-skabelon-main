@@ -1,17 +1,55 @@
 /* Variabler */
 html {
-  --color-page: #f7f7f7;
-  --color-surface: #fff;
-  --color-text: #222;
-  --color-muted: #666;
-  --color-border: #d8d8d8;
+  /* Farver fra styletile (masquerade) */
+  --color-page: #f3e9d8; /* Background */
+  --color-surface: #d9c2a2; /* Surface */
+  --color-text: #3c0c0c; /* Text */
+  --color-primary: #712d2d; /* Primary */
+  --color-accent: #b49054; /* Accent, kun til pynt og kanter */
+  --color-night: #180954; /* Den 6. farve, mørkeblå */
+  --color-wine: #712d2d; /* Primary, som ikke skifter i dark mode */
+  --color-text-dark: #3c0c0c; /* Text, som ikke skifter i dark mode */
+
+  /* Afledte farver */
+  --color-on-primary: #f3e9d8; /* tekst oven på Primary */
+  --color-button-hover: var(--color-text);
+  --color-muted: #5e3030;
+  --color-border: var(--color-accent);
+  --color-error: #9b1c1c;
+
+  /* Fonte */
+  --font-heading: "Cinzel", "Times New Roman", serif;
+  --font-body: "IM Fell English", Georgia, serif;
+
+  /* Afstande */
   --space-05: 0.5rem;
   --space-1: 1rem;
   --space-2: 2rem;
   --space-3: 3rem;
 
+  color-scheme: light dark;
   background: var(--color-page);
   color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 112.5%; /* 18px brødtekst */
+}
+
+/* Darkmode: de samme variabler får bare nye værdier */
+@media (prefers-color-scheme: dark) {
+  html {
+    --color-page: #1f0b0b;
+    --color-surface: #351717;
+    --color-text: #f3e9d8;
+    --color-primary: #d9c2a2;
+    --color-on-primary: #1f0b0b;
+    --color-muted: #d9c2a2;
+    --color-error: #ff9d8a;
+  }
+}
+
+/* Skift mellem siderne (view transition) */
+@view-transition {
+  navigation: auto;
 }
 
 /* Globalt layout */
@@ -40,6 +78,49 @@ main {
 main > * {
   grid-column: 2;
   padding-block: var(--space-3);
+}
+
+/* Typografi */
+h1,
+h2,
+h3,
+summary,
+legend {
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+}
+
+h1 {
+  font-weight: 700;
+  font-size: clamp(2rem, 1.2rem + 3.5vw, 2.667rem); /* 48px på stor skærm */
+  line-height: 1.2;
+}
+
+h2 {
+  font-weight: 550;
+  font-size: 1.556rem; /* 28px */
+  line-height: 1.3;
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
+/* Links: understreget i Primary, understregningen bliver guld ved hover */
+a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-color: var(--color-accent);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
 }
 
 .svg-page {
@@ -122,7 +203,18 @@ main > * {
 
   display: grid;
   grid-template-columns: inherit;
-  background: var(--color-surface);
+
+  /* Header og footer er røde på alle sider, så farverne byttes om herinde */
+  --color-primary: #f3e9d8;
+  --color-text: #f3e9d8;
+  --color-muted: #d9c2a2;
+  --color-surface: var(--color-wine);
+  background: var(--color-wine);
+  color: #f3e9d8;
+}
+
+.site-header {
+  view-transition-name: site-header; /* headeren står stille, når man skifter side */
 }
 
 .header-content,
@@ -139,9 +231,19 @@ main > * {
 }
 
 .site-logo {
-  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: var(--space-05);
+  color: var(--color-primary);
+  font-family: var(--font-heading);
   font-weight: 700;
+  font-size: 0.95rem;
   text-decoration: none;
+}
+
+.site-logo img {
+  width: 2rem;
+  flex: none;
 }
 
 .footer-content {
@@ -163,8 +265,12 @@ main > * {
 
 .site-nav button {
   padding: 0.4rem 0.7rem;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  border: 2px solid var(--color-accent);
+  background: transparent;
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  cursor: pointer;
   @media (width > 600px) {
     display: none;
   }
@@ -175,7 +281,12 @@ main > * {
   padding: var(--space-1);
   list-style: none;
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 2px solid var(--color-accent);
+  @media (width <= 600px) {
+    /* Mobil: menuen åbner som en lille boks under knappen */
+    inset: 4.5rem 1rem auto auto;
+    min-width: 12rem;
+  }
   @media (width > 600px) {
     display: flex;
     gap: var(--space-1);
@@ -189,13 +300,17 @@ main > * {
 .menu a {
   display: block;
   padding: 0.4rem 0;
-  color: inherit;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
   text-decoration: none;
   border-bottom: 2px solid #0000;
 }
 
+.menu a:hover,
 .menu a[aria-current="page"] {
-  border-bottom-color: var(--color-border);
+  border-bottom-color: var(--color-accent);
 }
 
 /* Flader */
@@ -233,7 +348,33 @@ main > * {
 
 .accordion-item {
   border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  background: var(--color-page);
+}
+
+.accordion-item[open] {
+  border-color: var(--color-primary);
+}
+
+.accordion-item summary {
+  padding: 0.7rem var(--space-1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+/* Plus-tegnet drejer og bliver til et kryds, når punktet er åbent */
+.accordion-item summary::after {
+  content: "+";
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: rotate 0.3s;
+}
+
+.accordion-item[open] summary::after {
+  rotate: 45deg;
 }
 
 .accordion-item p {
@@ -241,13 +382,664 @@ main > * {
   color: var(--color-muted);
 }
 
+/* Punktet glider op og i. Virker fordi starter.css har interpolate-size: allow-keywords */
+.accordion-item::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition:
+    block-size 0.3s,
+    content-visibility 0.3s allow-discrete;
+}
+
+.accordion-item[open]::details-content {
+  block-size: auto;
+}
+
 /* Knap/link */
 .button {
   justify-self: start;
   display: inline-block;
-  padding: 0.5rem 0.8rem;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: inherit;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid transparent;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
   text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+/* Primary: baggrund Primary, tekst Background. Hover: baggrund Text */
+.button-primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.button-primary:hover {
+  background: var(--color-button-hover);
+  border-color: var(--color-button-hover);
+}
+
+/* Secondary: kant Accent, tekst Primary. Hover: baggrund Surface */
+.button-secondary {
+  background: transparent;
+  border-color: var(--color-accent);
+  color: var(--color-primary);
+}
+
+.button-secondary:hover {
+  background: var(--color-surface);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+/* ------------------------------------------------------------ */
+/* Forside                                                       */
+/* ------------------------------------------------------------ */
+
+/* En section i fuld bredde. Den låner sidens tre kolonner, så indholdet stadig står i midten */
+.full-bleed {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: inherit;
+}
+
+.full-bleed > * {
+  grid-column: 2;
+}
+
+/* Røde flader: her bytter vi om på farverne, så overskrifter og knapper bliver lyse */
+.hero,
+.letters {
+  --color-primary: #f3e9d8;
+  --color-on-primary: #712d2d;
+  --color-button-hover: #d9c2a2;
+  --color-text: #f3e9d8;
+  --color-surface: rgb(243 233 216 / 0.12);
+  color: #f3e9d8;
+  background-color: var(--color-wine);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  isolation: isolate; /* så baggrundsbilledet bliver liggende bag indholdet */
+  padding-block: var(--space-2);
+}
+
+/* Baggrundsbilledet ligger i et ::before, så vi kan skrue ned for det uden at teksten bliver svag */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("./img/hero-baggrund.svg") center / cover;
+  opacity: 0.15;
+}
+
+/* Rammen om hero */
+.hero-frame {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-05) var(--space-3);
+  border: 2px solid var(--color-accent);
+  text-align: center;
+}
+
+/* Inderste streg i rammen */
+.hero-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0.5rem;
+  border: 1px solid var(--color-accent);
+  pointer-events: none;
+}
+
+.hero-fleur {
+  width: 3.5rem;
+}
+
+/* Titlen i bue og maskerne ligger oven i hinanden i samme felt */
+.hero-title {
+  display: grid;
+  width: min(100%, 48rem);
+}
+
+.hero-title > svg,
+.hero-masker {
+  grid-area: 1 / 1;
+}
+
+.hero-title text {
+  font-family: var(--font-heading);
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  fill: var(--color-accent);
+}
+
+.hero-masker {
+  width: 34%;
+  align-self: end;
+  justify-self: center;
+  translate: 0 30%;
+  filter: drop-shadow(0 0.8rem 1rem rgb(0 0 0 / 0.35));
+}
+
+.hero-date {
+  margin-top: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Knappen i hero står i midten */
+.hero .button {
+  justify-self: center;
+  box-shadow: 0 0.3rem 0.8rem rgb(0 0 0 / 0.3);
+}
+
+/* Intro */
+.event-intro {
+  display: grid;
+  gap: var(--space-1);
+  max-width: 55ch;
+  justify-self: center;
+  padding-block: var(--space-3);
+}
+
+.event-intro p:first-child {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-primary);
+}
+
+/* Breve */
+.letters {
+  padding-block: var(--space-3);
+}
+
+.letters-content {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.letters h2 {
+  text-align: center;
+}
+
+.letter-grid {
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+/* Konvolutten */
+.envelope {
+  position: relative;
+  display: grid;
+  align-content: end;
+  justify-items: center;
+  gap: var(--space-05);
+  padding: 8rem var(--space-1) var(--space-1); /* plads til klappen og lakseglet øverst */
+  background: #f3e9d8;
+  color: #3c0c0c;
+  border: 3px solid var(--color-accent);
+  border-radius: 6px;
+  box-shadow: 0 0.6rem 1.2rem rgb(0 0 0 / 0.25);
+  transition:
+    translate 0.3s,
+    box-shadow 0.3s;
+}
+
+/* Klappen øverst er en trekant, lavet med clip-path */
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5.5rem;
+  background: #d9c2a2;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+  transition: scale 0.4s;
+}
+
+.envelope:hover {
+  translate: 0 -0.3rem;
+  box-shadow: 0 1rem 1.6rem rgb(0 0 0 / 0.3);
+}
+
+/* Klappen løfter sig en smule, når man holder musen over */
+.envelope:hover::before {
+  scale: 1 0.8;
+}
+
+/* Laksegl */
+.envelope-seal {
+  position: absolute;
+  top: 5.5rem;
+  left: 50%;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-night);
+  color: #f3e9d8;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 0 0 3px rgb(180 144 84 / 0.6);
+}
+
+.envelope h3 {
+  color: #712d2d;
+}
+
+.envelope .button {
+  justify-self: center;
+}
+
+/* Inde i konvolutten bruger knappen de lyse farver */
+.envelope .button-secondary {
+  color: #712d2d;
+}
+
+.envelope .button-secondary:hover {
+  background: #d9c2a2;
+}
+
+/* Teaser */
+.teaser {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  text-align: center;
+  padding-block: var(--space-3);
+}
+
+.teaser .actions {
+  justify-content: center;
+}
+
+/* ------------------------------------------------------------ */
+/* Brevet (popover på forsiden)                                  */
+/* ------------------------------------------------------------ */
+.letter {
+  margin: auto; /* midt på skærmen */
+  width: min(32rem, 100% - 2rem);
+  max-height: 90svh;
+  overflow: auto;
+  padding: var(--space-2);
+  gap: var(--space-1);
+
+  /* Et brev er papir, så farverne er de samme i light og dark mode */
+  background: #f3e9d8;
+  color: #3c0c0c;
+  border: 1px solid #b49054;
+  outline: 1px solid #b49054;
+  outline-offset: -0.6rem;
+  box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 0.45);
+
+  /* Lukket: brevet er foldet sammen fra toppen */
+  opacity: 0;
+  scale: 1 0.1;
+  transform-origin: top center;
+  transition:
+    opacity 0.35s,
+    scale 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2),
+    overlay 0.5s allow-discrete,
+    display 0.5s allow-discrete;
+}
+
+.letter:popover-open {
+  display: grid;
+  opacity: 1;
+  scale: 1 1;
+
+  /* Hvor animationen starter fra, når brevet åbner */
+  @starting-style {
+    opacity: 0;
+    scale: 1 0.1;
+  }
+}
+
+.letter::backdrop {
+  background: rgb(60 12 12 / 0);
+  transition:
+    background 0.4s,
+    overlay 0.4s allow-discrete,
+    display 0.4s allow-discrete;
+}
+
+.letter:popover-open::backdrop {
+  background: rgb(60 12 12 / 0.7);
+
+  @starting-style {
+    background: rgb(60 12 12 / 0);
+  }
+}
+
+.letter h2 {
+  color: #712d2d;
+}
+
+.letter ul {
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.letter-kicker {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #712d2d;
+}
+
+.letter-sign {
+  margin-top: var(--space-05);
+  font-style: italic;
+  text-align: right;
+}
+
+.letter .button {
+  justify-self: center;
+  background: #712d2d;
+  border-color: #712d2d;
+  color: #f3e9d8;
+}
+
+.letter .button:hover {
+  background: #3c0c0c;
+  border-color: #3c0c0c;
+}
+
+/* ------------------------------------------------------------ */
+/* SVG-side                                                      */
+/* ------------------------------------------------------------ */
+.svg-placeholder {
+  border: 2px solid var(--color-accent);
+}
+
+#plantegning text {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  pointer-events: none; /* teksten må ikke stå i vejen for klik */
+}
+
+/* De tre områder er usynlige, indtil man holder musen over eller vælger dem */
+.omraade {
+  fill: #b49054;
+  fill-opacity: 0;
+  stroke: #712d2d;
+  stroke-width: 6;
+  stroke-opacity: 0;
+  cursor: pointer;
+  transition:
+    fill-opacity 0.3s,
+    stroke-opacity 0.3s;
+}
+
+.omraade:hover {
+  fill-opacity: 0.25;
+}
+
+.omraade.er-aktiv {
+  fill-opacity: 0.45;
+  stroke-opacity: 1;
+}
+
+/* ------------------------------------------------------------ */
+/* Formular                                                      */
+/* ------------------------------------------------------------ */
+.masquerade-form {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-2);
+}
+
+.form-group {
+  display: grid;
+  gap: 0.6rem;
+  min-width: 0;
+  padding: var(--space-1);
+  border: 1px solid var(--color-accent);
+}
+
+legend {
+  padding-inline: 0.4rem;
+  font-weight: 600;
+}
+
+/* Tekstfelt og dropdown */
+.text-label {
+  display: grid;
+  gap: 0.3rem;
+}
+
+/* Stjerne efter teksten "Navn", fordi feltet er påkrævet */
+.text-label:has(:required) {
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+}
+
+.text-label:has(:required)::after {
+  content: "*";
+  grid-area: 1 / 2;
+  color: var(--color-error);
+}
+
+.text-label input,
+.text-label .error-message {
+  grid-column: 1 / -1;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.5rem 0.7rem;
+  background: var(--color-page);
+  border: 1px solid var(--color-text);
+  border-radius: 2px;
+}
+
+/* Fejl: vises først, når brugeren har prøvet at sende eller har forladt feltet */
+.error-message {
+  display: none;
+  color: var(--color-error);
+  font-style: italic;
+}
+
+label:has(:user-invalid) {
+  input {
+    border-color: var(--color-error);
+    outline: 2px solid var(--color-error);
+    outline-offset: 2px;
+  }
+  .error-message {
+    display: block;
+  }
+}
+
+/* Radio og checkbox */
+.radio-group label,
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+
+/* Radioknap tegnet selv: en cirkel, der bliver fyldt med Primary, når den er valgt */
+input[type="radio"] {
+  appearance: none;
+  flex: none;
+  width: 1.2em;
+  height: 1.2em;
+  border: 2px solid var(--color-text);
+  border-radius: 50%;
+  background: var(--color-page);
+  cursor: pointer;
+}
+
+input[type="radio"]:checked {
+  background: radial-gradient(var(--color-primary) 45%, var(--color-page) 50%);
+}
+
+input[type="checkbox"] {
+  flex: none;
+  width: 1.2em;
+  height: 1.2em;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* Dropdown. starter.css slår den nye styling til med appearance: base-select */
+::picker(select) {
+  margin-top: 0.2rem;
+  padding: 0.3rem;
+  background: var(--color-page);
+  border: 1px solid var(--color-accent);
+}
+
+select::picker-icon {
+  color: var(--color-primary);
+  transition: rotate 0.3s;
+}
+
+select:open::picker-icon {
+  rotate: 180deg;
+}
+
+option {
+  padding: 0.5rem 0.7rem;
+}
+
+option:hover {
+  background: var(--color-surface);
+}
+
+option:checked {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* ------------------------------------------------------------ */
+/* Opsamlingsside                                                */
+/* ------------------------------------------------------------ */
+.invitation {
+  padding: var(--space-2);
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+  border: 6px double var(--color-accent);
+  animation: fade-up 0.8s ease-out both;
+}
+
+.invitation h2,
+.invitation h3 {
+  color: inherit;
+}
+
+.invitation h3 {
+  margin-top: var(--space-1);
+}
+
+.invitation img {
+  max-width: 15rem;
+  justify-self: center;
+}
+
+.invitation ul {
+  padding-left: 1.2rem;
+}
+
+.invitation-kicker,
+.invitation-footer {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.invitation-footer {
+  margin-top: var(--space-1);
+  padding-top: var(--space-1);
+  border-top: 1px solid currentColor;
+}
+
+/* Variationer: script.js sætter en af de tre klasser på invitationen */
+.hof-rubin {
+  background: #712d2d;
+  color: #f3e9d8;
+}
+
+.hof-guld {
+  background: #b49054;
+  color: #3c0c0c;
+}
+
+.hof-nat {
+  background: #180954;
+  color: #f3e9d8;
+}
+
+/* ------------------------------------------------------------ */
+/* Animationer                                                   */
+/* ------------------------------------------------------------ */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    translate: 0 2rem;
+  }
+}
+
+@keyframes float {
+  to {
+    translate: 0 -0.8rem;
+    rotate: 2deg;
+  }
+}
+
+/* Kun hvis brugeren ikke har bedt om mindre bevægelse */
+@media (prefers-reduced-motion: no-preference) {
+  /* Masken i hero svæver stille op og ned */
+  .hero-mask {
+    animation: float 4s ease-in-out infinite alternate;
+  }
+
+  /* Scroll animation: elementet toner frem, mens det kommer ind i viewporten */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: fade-up ease-out both;
+      animation-timeline: view();
+      animation-range: 0% 35%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invitation {
+    animation: none;
+  }
+
+  .popup,
+  .accordion-item::details-content {
+    transition: none;
+  }
 }

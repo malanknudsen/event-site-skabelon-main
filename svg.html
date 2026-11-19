@@ -12,13 +12,16 @@
 <body>
   <header class="site-header">
     <div class="header-content">
-      <a class="site-logo" href="./">Eventnavn</a>
+      <a class="site-logo" href="./">
+        <img src="./img/favicon.svg" alt="">
+        Renæssancemaskeraden
+      </a>
       <nav class="site-nav">
-        <button>Menu</button>
+        <button popovertarget="menu">Menu</button>
         <ul class="menu" id="menu" popover>
           <li><a href="./">Forside</a></li>
-          <li><a href="./svg.html" aria-current="page">Interaktiv SVG</a></li>
-          <li><a href="./form.html">Formular</a></li>
+          <li><a href="./svg.html" aria-current="page">Kortet</a></li>
+          <li><a href="./form.html">Tilmelding</a></li>
         </ul>
       </nav>
     </div>
@@ -27,29 +30,171 @@
   <main>
     <section class="svg-page">
       <header class="svg-intro">
-        <h1>Interaktiv SVG</h1>
-        <p>Indsæt din egen SVG og forbind den med punkterne nedenfor.</p>
+        <h1>Find vej i paladset</h1>
+        <p>Tryk på et område i plantegningen, eller åbn et punkt i listen, for at se hvad der sker hvor.</p>
       </header>
 
       <section class="svg-layout">
-        <div class="svg-placeholder"></div>
+        <div class="svg-placeholder">
+
+          <!-- Plantegning. Baggrunden er 1600 x 900, altså 16:9.
+               Lagene hedder: baggrund, figurer, omraader og tekst. -->
+          <svg id="plantegning" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img"
+            aria-labelledby="plantegning-titel">
+            <title id="plantegning-titel">Plantegning af Palazzo Rosso med balsal, bar og have</title>
+
+            <defs>
+              <pattern id="tern" width="60" height="60" patternUnits="userSpaceOnUse">
+                <rect width="60" height="60" fill="#F3E9D8" />
+                <rect width="30" height="30" fill="#D9C2A2" />
+                <rect x="30" y="30" width="30" height="30" fill="#D9C2A2" />
+              </pattern>
+            </defs>
+
+            <!-- Lag: baggrund (kassen i 16:9, som holder størrelsen) -->
+            <g id="baggrund">
+              <rect width="1600" height="900" fill="#F3E9D8" />
+              <rect x="30" y="30" width="1540" height="840" fill="none" stroke="#B49054" stroke-width="4" />
+              <rect x="44" y="44" width="1512" height="812" fill="none" stroke="#B49054" stroke-width="1.5" />
+            </g>
+
+            <!-- Lag: figurer (alt det, der står stille) -->
+            <g id="figurer">
+              <!-- Gulve -->
+              <rect x="100" y="110" width="620" height="480" fill="url(#tern)" />
+              <rect x="720" y="110" width="330" height="230" fill="#D9C2A2" />
+              <rect x="720" y="340" width="330" height="250" fill="#F3E9D8" />
+
+              <!-- Terrasse -->
+              <rect x="100" y="630" width="950" height="160" fill="none" stroke="#3C0C0C" stroke-width="3"
+                stroke-dasharray="14 8" />
+              <g fill="#D9C2A2" stroke="#3C0C0C" stroke-width="3">
+                <circle cx="220" cy="705" r="26" />
+                <circle cx="380" cy="705" r="26" />
+                <circle cx="540" cy="705" r="26" />
+                <circle cx="700" cy="705" r="26" />
+                <circle cx="860" cy="705" r="26" />
+              </g>
+
+              <!-- Have -->
+              <rect x="1100" y="110" width="400" height="680" fill="#D9C2A2" fill-opacity="0.5" stroke="#3C0C0C"
+                stroke-width="4" />
+              <g fill="none" stroke="#712D2D" stroke-linejoin="round">
+                <g stroke-width="7">
+                  <rect x="1130" y="140" width="130" height="220" rx="20" />
+                  <rect x="1340" y="140" width="130" height="220" rx="20" />
+                  <rect x="1130" y="540" width="130" height="220" rx="20" />
+                  <rect x="1340" y="540" width="130" height="220" rx="20" />
+                </g>
+                <g stroke-width="3">
+                  <rect x="1160" y="170" width="70" height="160" rx="12" />
+                  <rect x="1370" y="170" width="70" height="160" rx="12" />
+                  <rect x="1160" y="570" width="70" height="160" rx="12" />
+                  <rect x="1370" y="570" width="70" height="160" rx="12" />
+                </g>
+              </g>
+              <!-- Springvand -->
+              <circle cx="1300" cy="450" r="70" fill="#F3E9D8" stroke="#3C0C0C" stroke-width="4" />
+              <circle cx="1300" cy="450" r="46" fill="#180954" />
+              <circle cx="1300" cy="450" r="14" fill="#B49054" />
+              <!-- Fakler -->
+              <g fill="#B49054" stroke="#3C0C0C" stroke-width="2">
+                <circle cx="1300" cy="170" r="9" />
+                <circle cx="1300" cy="330" r="9" />
+                <circle cx="1300" cy="570" r="9" />
+                <circle cx="1300" cy="730" r="9" />
+                <circle cx="1160" cy="450" r="9" />
+                <circle cx="1440" cy="450" r="9" />
+              </g>
+
+              <!-- Balsal: dansegulv og orkester -->
+              <circle cx="410" cy="360" r="150" fill="#F3E9D8" stroke="#B49054" stroke-width="6" />
+              <circle cx="410" cy="360" r="122" fill="none" stroke="#712D2D" stroke-width="2" />
+              <g fill="none" stroke="#B49054" stroke-width="4" transform="translate(410 360)">
+                <rect x="-72" y="-72" width="144" height="144" />
+                <rect x="-72" y="-72" width="144" height="144" transform="rotate(45)" />
+              </g>
+              <circle cx="410" cy="360" r="18" fill="#712D2D" />
+              <rect x="260" y="124" width="300" height="56" fill="#712D2D" />
+              <g fill="#3C0C0C">
+                <circle cx="132" cy="142" r="11" />
+                <circle cx="688" cy="142" r="11" />
+                <circle cx="132" cy="350" r="11" />
+                <circle cx="688" cy="350" r="11" />
+                <circle cx="132" cy="558" r="11" />
+                <circle cx="688" cy="558" r="11" />
+              </g>
+
+              <!-- Bar: disk, barstole og borde -->
+              <path d="M760 150H1010V200H810V300H760Z" fill="#712D2D" stroke="#3C0C0C" stroke-width="3" />
+              <g fill="#B49054" stroke="#3C0C0C" stroke-width="2">
+                <circle cx="850" cy="224" r="11" />
+                <circle cx="895" cy="224" r="11" />
+                <circle cx="940" cy="224" r="11" />
+                <circle cx="985" cy="224" r="11" />
+                <circle cx="834" cy="262" r="11" />
+              </g>
+              <g fill="#F3E9D8" stroke="#3C0C0C" stroke-width="3">
+                <circle cx="925" cy="290" r="22" />
+                <circle cx="1000" cy="282" r="22" />
+              </g>
+
+              <!-- Foyer: trappe -->
+              <g fill="none" stroke="#3C0C0C" stroke-width="3">
+                <rect x="950" y="372" width="80" height="120" />
+                <path d="M950 392H1030M950 412H1030M950 432H1030M950 452H1030M950 472H1030" />
+              </g>
+
+              <!-- Mure -->
+              <path d="M100 110H1050V590H100Z M720 110V590 M720 340H1050" fill="none" stroke="#3C0C0C" stroke-width="10"
+                stroke-linejoin="miter" />
+              <!-- Døråbninger (streger i gulvets farve, der dækker muren) -->
+              <g stroke="#F3E9D8" stroke-width="12">
+                <path d="M720 430V500" />
+                <path d="M850 340H920" />
+                <path d="M850 590H920" />
+                <path d="M360 590H460" />
+                <path d="M1050 440V500" />
+              </g>
+            </g>
+
+            <!-- Lag: omraader (de tre områder, der kan trykkes på) -->
+            <g id="omraader">
+              <rect id="balsal" class="omraade" x="105" y="115" width="610" height="470" />
+              <rect id="bar" class="omraade" x="725" y="115" width="320" height="220" />
+              <rect id="have" class="omraade" x="1102" y="112" width="396" height="676" />
+            </g>
+
+            <!-- Lag: tekst -->
+            <g id="tekst" text-anchor="middle" fill="#3C0C0C">
+              <text x="410" y="165" font-size="30" fill="#F3E9D8">ORKESTER</text>
+              <text x="410" y="560" font-size="44" stroke="#F3E9D8" stroke-width="10" paint-order="stroke">BALSAL</text>
+              <text x="885" y="188" font-size="34" fill="#F3E9D8">BAR</text>
+              <text x="1300" y="94" font-size="40">HAVE</text>
+              <text x="850" y="545" font-size="26">FOYER</text>
+              <text x="575" y="772" font-size="26">TERRASSE</text>
+              <text x="800" y="842" font-size="24" letter-spacing="6" fill="#712D2D">PALAZZO ROSSO · PLANTEGNING</text>
+            </g>
+          </svg>
+
+        </div>
 
         <article class="panel">
-          <h2>Udforsk eventet</h2>
+          <h2>Udforsk paladset</h2>
           <div class="accordion">
-            <!-- TODO: Lav om til details/summary -->
-            <div class="accordion-item">
-              <h3>Punkt 1</h3>
-              <p>Beskriv første område, aktivitet eller del af dit event.</p>
-            </div>
-            <div class="accordion-item">
-              <h3>Punkt 2</h3>
-              <p>Beskriv andet område, aktivitet eller del af dit event.</p>
-            </div>
-            <div class="accordion-item">
-              <h3>Punkt 3</h3>
-              <p>Beskriv tredje område, aktivitet eller del af dit event.</p>
-            </div>
+            <details class="accordion-item" id="info-balsal" name="omraade">
+              <summary>Balsalen</summary>
+              <p>Paladsets hjerte. Orkestret spiller fra klokken 20, og dansegulvet under lysekronen er åbent hele
+                natten. Det er her, maskerne falder ved midnat.</p>
+            </details>
+            <details class="accordion-item" id="info-bar" name="omraade">
+              <summary>Baren</summary>
+              <p>Krydret vin, mousserende og mørk chokolade. Sæt dig ved disken, eller tag glasset med ud i haven.</p>
+            </details>
+            <details class="accordion-item" id="info-have" name="omraade">
+              <summary>Haven</summary>
+              <p>Fakler lyser stierne op mellem hækkene. Klokken 22 går fakkelvandringen fra springvandet i midten.</p>
+            </details>
           </div>
         </article>
       </section>
@@ -58,8 +203,8 @@
 
   <footer class="site-footer">
     <div class="footer-content">
-      <p>Eventnavn</p>
-      <p>Footer</p>
+      <p>Renæssancemaskeraden</p>
+      <p>Skoleprojekt · EK Multimediedesign 2026</p>
     </div>
   </footer>
   <script src="./script.js"></script>

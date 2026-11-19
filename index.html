@@ -2,34 +2,142 @@
 <html lang="da">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eventnavn</title>
-  <link rel="stylesheet" href="./starter.css">
-  <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Renæssancemaskeraden</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="starter.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
   <header class="site-header">
     <div class="header-content">
-      <a class="site-logo" href="./">Eventnavn</a>
+      <a class="site-logo" href="./">
+        <img src="./img/favicon.svg" alt="">
+        Renæssancemaskeraden
+      </a>
       <nav class="site-nav">
-        <button>Menu</button>
+        <button popovertarget="menu">Menu</button>
         <ul class="menu" id="menu" popover>
           <li><a href="./" aria-current="page">Forside</a></li>
-          <li><a href="./svg.html">Interaktiv SVG</a></li>
-          <li><a href="./form.html">Formular</a></li>
+          <li><a href="./svg.html">Kortet</a></li>
+          <li><a href="./form.html">Tilmelding</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main></main>
+  <main>
+    <!-- Hero: fuld bredde, med baggrundsbillede og ramme -->
+    <section class="hero full-bleed">
+      <div class="hero-frame">
+        <img class="hero-fleur" src="./img/fleur.svg" alt="">
+
+        <!-- Titlen i en bue. Den rigtige tekst står skjult i h1, så skærmlæsere kan læse den.
+             Selve buen er en lille SVG, hvor teksten følger stien med id "bue". -->
+        <h1 class="hero-title">
+          <span class="visually-hidden">Renæssancemaskeraden</span>
+          <svg viewBox="0 0 1000 330" aria-hidden="true">
+            <path id="bue" d="M70 300A560 560 0 0 1 930 300" fill="none" />
+            <text>
+              <textPath href="#bue" startOffset="50%" text-anchor="middle">Renæssancemaskeraden</textPath>
+            </text>
+          </svg>
+          <!-- Placeholder: skift til jeres billede af de to masker -->
+          <img class="hero-masker" src="./img/maske-colombina.svg" alt="">
+        </h1>
+
+        <p class="hero-date">Lørdag 12. december 2026 · kl. 19</p>
+        <a class="button button-primary" href="./form.html">Tilmeld dig her</a>
+      </div>
+    </section>
+
+    <!-- Intro -->
+    <section class="event-intro reveal">
+      <p>Én nat. Tusind lys. Ingen ved, hvem du er, før masken falder ved midnat.</p>
+      <p>Du træder ind i kongehaven som dig selv og går ud som en anden. Der er levende musik, dans under
+        stjernerne, fakler mellem hækkene og en bar, hvor glassene aldrig står tomme længe.</p>
+    </section>
+
+    <!-- Breve: fuld bredde. Hvert brev åbner en popover -->
+    <section class="letters full-bleed">
+      <div class="letters-content">
+        <h2>Du har fået post</h2>
+        <div class="letter-grid">
+
+          <article class="envelope reveal">
+            <span class="envelope-seal" aria-hidden="true">R</span>
+            <h3>Dresscode</h3>
+            <button class="button button-secondary" popovertarget="brev-dresscode">Åbn brevet</button>
+          </article>
+
+          <article class="envelope reveal">
+            <span class="envelope-seal" aria-hidden="true">R</span>
+            <h3>Aftenens program</h3>
+            <button class="button button-secondary" popovertarget="brev-program">Åbn brevet</button>
+          </article>
+
+          <article class="envelope reveal">
+            <span class="envelope-seal" aria-hidden="true">R</span>
+            <h3>Maskernes historie</h3>
+            <button class="button button-secondary" popovertarget="brev-masker">Åbn brevet</button>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Teaser til kortet og formularen -->
+    <section class="teaser reveal">
+      <h2>Find vej i haven</h2>
+      <p>Musikpavillonen, baren og labyrinten venter. Se kortet, før du ankommer.</p>
+      <div class="actions">
+        <a class="button button-primary" href="./svg.html">Se kortet</a>
+        <a class="button button-secondary" href="./form.html">Tilmeld dig</a>
+      </div>
+    </section>
+
+    <!-- Brevene (popovers). De ligger her og folder sig ud oven på siden -->
+    <article class="letter" id="brev-dresscode" popover>
+      <p class="letter-kicker">Til vores gæster</p>
+      <h2>Dresscode</h2>
+      <p>Kom i dit fineste. Tænk dybe røde farver, guld og sort. Masken er det eneste krav, og den skal blive på
+        til midnat.</p>
+      <p>Har du ingen maske, kan du låne en ved porten.</p>
+      <p class="letter-sign">Deres ærbødige vært</p>
+      <button class="button button-primary" popovertarget="brev-dresscode" popovertargetaction="hide">Luk
+        brevet</button>
+    </article>
+
+    <article class="letter" id="brev-program" popover>
+      <p class="letter-kicker">Til vores gæster</p>
+      <h2>Aftenens program</h2>
+      <ul>
+        <li><strong>19.00</strong> Portene åbner</li>
+        <li><strong>20.00</strong> Orkestret spiller op i pavillonen</li>
+        <li><strong>22.00</strong> Fakkelvandring gennem labyrinten</li>
+        <li><strong>24.00</strong> Maskerne falder</li>
+      </ul>
+      <p class="letter-sign">Deres ærbødige vært</p>
+      <button class="button button-primary" popovertarget="brev-program" popovertargetaction="hide">Luk brevet</button>
+    </article>
+
+    <article class="letter" id="brev-masker" popover>
+      <p class="letter-kicker">Til vores gæster</p>
+      <h2>Maskernes historie</h2>
+      <p><strong>Colombina</strong> er halvmasken med fjer, der kun dækker øjnene.</p>
+      <p><strong>Volto</strong> er den hvide helmaske, der gør alle ansigter ens.</p>
+      <p><strong>Bauta</strong> har en fremskudt hage, så man kan spise og drikke uden at tage den af.</p>
+      <p class="letter-sign">Deres ærbødige vært</p>
+      <button class="button button-primary" popovertarget="brev-masker" popovertargetaction="hide">Luk brevet</button>
+    </article>
+  </main>
 
   <footer class="site-footer">
     <div class="footer-content">
-      <p>Eventnavn</p>
-      <p>Footer</p>
+      <p>Renæssancemaskeraden</p>
+      <p>Skoleprojekt · EK Multimediedesign 2026</p>
     </div>
   </footer>
   <script src="./script.js"></script>
